@@ -1,0 +1,6 @@
+[submodule "unigraph-dev"]
+	path = unigraph-dev
+	url = https://github.com/unigraph-dev/unigraph-dev
+[submodule "dgraph"]
+	path = dgraph
+	url = https://github.com/unigraph-dev/dgraph
