@@ -1,0 +1,56 @@
+version: "2.0"
+services:
+  dgraph-zero:
+    image: unigraph-dgraph:latest
+    networks:
+      - unigraph-net
+    volumes:
+      - /tmp/data:/dgraph
+    command: dgraph zero --my=dgraph-zero:5080
+    ports:
+      - 5080:5080
+      - 6080:6080
+    restart: unless-stopped
+
+  dgraph-alpha:
+    image: unigraph-dgraph:latest
+    networks:
+      - unigraph-net
+    volumes:
+      - /tmp/data:/dgraph
+    command: dgraph alpha --my=dgraph-alpha:7080 --zero=dgraph-zero:5080 --whitelist=172.26.0.0/29
+    ports:
+      - 8080:8080
+      - 9080:9080
+    restart: unless-stopped
+
+  unigraph-be:
+    image: unigraph-be:latest
+    networks:
+      - unigraph-net
+    ports:
+      - 3001:3001
+    depends_on:
+      - "dgraph-alpha"
+    command: ["/bin/bash",  "-i", "/opt/unigraph/scripts/start_be.sh"]
+    restart: unless-stopped
+
+  unigraph-fe:
+    image: unigraph-fe:latest
+    networks:
+      - unigraph-net
+    ports:
+      - 3000:3000
+    depends_on:
+      - "unigraph-be"
+    command: ["/bin/bash",  "-i", "/opt/unigraph/scripts/start_fe.sh"]
+    restart: unless-stopped
+
+networks:
+  unigraph-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.26.0.0/29
+
