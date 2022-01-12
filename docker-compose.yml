@@ -24,26 +24,24 @@ services:
       - 9080:9080
     restart: unless-stopped
 
-  unigraph-be:
-    image: unigraph-be:latest
+  backend:
+    image: unigraph-backend:latest
     networks:
       - unigraph-net
     ports:
       - 3001:3001
     depends_on:
       - "dgraph-alpha"
-    command: ["/bin/bash",  "-i", "/opt/unigraph/scripts/start_be.sh"]
     restart: unless-stopped
 
-  unigraph-fe:
-    image: unigraph-fe:latest
+  explorer: 
+    image: unigraph-explorer:latest
     networks:
       - unigraph-net
     ports:
       - 3000:3000
     depends_on:
-      - "unigraph-be"
-    command: ["/bin/bash",  "-i", "/opt/unigraph/scripts/start_fe.sh"]
+      - "backend"
     restart: unless-stopped
 
 networks:

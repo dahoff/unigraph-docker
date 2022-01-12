@@ -1,5 +1,5 @@
 #FROM ubuntu
-FROM unigraph-dgraph
+FROM ubuntu
 
 WORKDIR /opt/unigraph
 

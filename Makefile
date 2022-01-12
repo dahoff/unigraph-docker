@@ -1,30 +1,29 @@
-VERSION=latest
+TAG=latest
 
-IMAGE_NAME=$app
+.PHONY: all
+all: dgraph backend explorer
 
 .PHONY: dgraph
 dgraph:
 	@echo "+ $@"
-	@docker build -t unigraph-dgraph:${VERSION} ./dgraph -f ./dgraph/contrib/Dockerfile
+	@docker build -t unigraph-dgraph:${TAG} ./dgraph -f ./dgraph/contrib/Dockerfile
 	@echo 'Done.'
 
 .PHONY: base
 base:
 	@echo "+ $@"
-	@docker build -t unigraph-base:${VERSION} .
+	@docker build -t unigraph-base:${TAG} .
 	@echo 'Done.'
 
 .PHONY: backend
 backend: base
 	@echo "+ $@"
-	@docker build -t unigraph-be:${VERSION} ./unigraph-be
+	@docker build -t unigraph-backend:${TAG} ./backend
 	@echo 'Done.'
 
 .PHONY: explorer
 explorer: base
 	@echo "+ $@"
-	@docker build -t unigraph-fe:${VERSION} ./unigraph-fe
+	@docker build -t unigraph-explorer:${TAG} ./explorer
 	@echo 'Done.'
 
-.PHONY: all
-all: dgraph backend explorer
