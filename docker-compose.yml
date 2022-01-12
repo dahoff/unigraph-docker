@@ -5,7 +5,7 @@ services:
     networks:
       - unigraph-net
     volumes:
-      - /tmp/data:/dgraph
+      - /opt/unigraph/data:/dgraph
     command: dgraph zero --my=dgraph-zero:5080
     ports:
       - 5080:5080
@@ -17,7 +17,7 @@ services:
     networks:
       - unigraph-net
     volumes:
-      - /tmp/data:/dgraph
+      - /opt/unigraph/data:/dgraph
     command: dgraph alpha --my=dgraph-alpha:7080 --zero=dgraph-zero:5080 --whitelist=172.26.0.0/29
     ports:
       - 8080:8080
