@@ -32,6 +32,7 @@ services:
       - 3001:3001
     depends_on:
       - "dgraph-alpha"
+    command: /bin/bash -i /opt/unigraph/scripts/start_backend.sh -h dgraph-alpha 
     restart: unless-stopped
 
   explorer: 
