@@ -28,6 +28,8 @@ services:
     image: unigraph-backend:latest
     networks:
       - unigraph-net
+    volumes:
+      - /etc/unigraph:/config
     ports:
       - 3001:3001
     depends_on:

@@ -16,6 +16,7 @@ done
 
 cd /opt/unigraph
 
+# Setup the endpoint for dgraph
 if [ -n "$h" ]; then
     sed -i s/localhost/$h/ packages/unigraph-dev-backend/src/index.ts
 fi
@@ -24,5 +25,10 @@ if [ -n "$p" ]; then
     sed -i s/9080/$p/ packages/unigraph-dev-backend/src/index.ts
 fi
 
+# Copy secrets
+if [ -f /config/secrets.env.json ]; then
+    cp /config/secrets.env.json .
+fi
 
+# Start server
 yarn backend-start
